@@ -39,7 +39,7 @@ class ContributorStats:
     contribution_count: int
     commit_url: str
     sponsor_info: str
-    organisations: list[str] = field(default_factory=list)
+    organizations: list[str] = field(default_factory=list)
 
 
 def is_new_contributor(username: str, returning_contributors: list) -> bool:

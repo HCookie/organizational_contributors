@@ -63,7 +63,7 @@ def main():
         environment.repositories_list,
         environment.sponsor_info,
         environment.link_to_profile,
-        environment.show_organisations_list,
+        environment.show_organizations_list,
     )
     # TODO HCookie Fix to json
     json_writer.write_to_json(
@@ -165,7 +165,7 @@ def get_contributors(
                 contribution_count=user.contributions_count,
                 commit_url=commit_url,
                 sponsor_info="",
-                organisations=list(map(lambda x: x.url.split("/")[-1], user.organizations())),
+                organizations=list(map(lambda x: x.url.split("/")[-1], user.organizations())),
             )
             contributors.append(contributor)
     except Exception as e:

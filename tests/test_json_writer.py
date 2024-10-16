@@ -27,7 +27,7 @@ class TestWriteToJson(unittest.TestCase):
                     "new_contributor": False,
                     "avatar_url": "https://test_url.com",
                     "contribution_count": 10,
-                    'organisations': [],
+                    'organizations': [],
                     "commit_url": "https://test_commit_url.com",
                     "sponsor_info": "",
                 }

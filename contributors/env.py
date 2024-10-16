@@ -86,7 +86,7 @@ class EnvironmentConfig:
     end_date: str
     sponsor_info: bool
     link_to_profile: bool
-    show_organisations_list: list[str]
+    show_organizations_list: list[str]
     filename: str = "contributors"
 
 
@@ -123,8 +123,8 @@ def get_env_vars(
                 whether to get sponsor information on the contributor
             link_to_profile, bool:
                 whether to link username to Github profile in markdown output
-            show_organisations_list, list:
-                Organisations to show in order of preference
+            show_organizations_list, list:
+                Organizations to show in order of preference
 
     """
 
@@ -152,7 +152,7 @@ def get_env_vars(
     ghe = os.getenv("GH_ENTERPRISE_URL", default="").strip()
     filename = os.getenv("CONTRIB_FILENAME", default="contributors").strip()
 
-    show_organisations = os.getenv("SHOW_ORGANISATIONS", default="").strip()
+    show_organizations = os.getenv("SHOW_ORGANIZATIONS", default="").strip()
 
     start_date = validate_date_format("START_DATE")
     end_date = validate_date_format("END_DATE")
@@ -165,9 +165,9 @@ def get_env_vars(
     if repositories_str:
         repositories_list = [repository.strip() for repository in repositories_str.split(",")]
 
-    show_organisations_list = []
-    if show_organisations:
-        show_organisations_list = [org.strip() for org in show_organisations.split(",")]
+    show_organizations_list = []
+    if show_organizations:
+        show_organizations_list = [org.strip() for org in show_organizations.split(",")]
 
     return EnvironmentConfig(
         organization,
@@ -181,6 +181,6 @@ def get_env_vars(
         end_date,
         sponsor_info,
         link_to_profile,
-        show_organisations_list,
+        show_organizations_list,
         filename=filename,
     )
