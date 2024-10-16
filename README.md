@@ -1,10 +1,10 @@
-# Contributors sorted by Organisation action
+# Contributors sorted by Organization action
 
 [![Python package](https://github.com/hcookie/contributors/actions/workflows/python-ci.yml/badge.svg)](https://github.com/hcookie/contributors/actions/workflows/python-ci.yml)
 [![Docker Image CI](https://github.com/hcookie/contributors/actions/workflows/docker-ci.yml/badge.svg)](https://github.com/hcookie/contributors/actions/workflows/docker-ci.yml)
 [![CodeQL](https://github.com/hcookie/contributors/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/hcookie/contributors/actions/workflows/github-code-scanning/codeql)[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/github/contributors/badge)](https://scorecard.dev/viewer/?uri=github.com/github/contributors)
 
-This is a GitHub Action that given an organization or specified repositories, produces information about the [contributors](https://chaoss.community/kb/metric-contributors/) sorted by organisation.
+This is a GitHub Action that given an organization or specified repositories, produces information about the [contributors](https://chaoss.community/kb/metric-contributors/) sorted by organization.
 
 Similar actions to help you recognize contributors by putting them into a `README` or `CONTRIBUTORS.md` include:
 
@@ -13,8 +13,8 @@ Similar actions to help you recognize contributors by putting them into a `READM
 
 ## Example use cases
 
-- As a maintainer, you may want to acknowledge contributors from various organisations in a discussion post
-- A repository wants to track contributions from organisations
+- As a maintainer, you may want to acknowledge contributors from various organizations in a discussion post
+- A repository wants to track contributions from organizations
 
 ## Support
 
@@ -80,7 +80,7 @@ This action can be configured to authenticate with GitHub App Installation or Pe
 | `END_DATE`          | False                                           | Current Date      | The date at which you want to stop gathering contributor information. Must be later than the `START_DATE`. ie. Aug 2nd, 2023 would be `2023-08-02`                                                                       |
 | `SPONSOR_INFO`      | False                                           | False             | If you want to include sponsor information in the output. This will include the sponsor count and the sponsor URL. This will impact action performance. ie. SPONSOR_INFO = "False" or SPONSOR_INFO = "True"              |
 | `LINK_TO_PROFILE`   | False                                           | True              | If you want to link usernames to their GitHub profiles in the output. ie. LINK_TO_PROFILE = "True" or LINK_TO_PROFILE = "False"                                                                                          |
-| `SHOW_ORGANISATIONS`   | False                                           | []              | Organisations to show in the contributors table. Will be evaluated in order, and a user only added to only the first one they are a part of. Any contributors with no organisation will be shown in independent. Set to 'all' to show all organisations. 
+| `SHOW_ORGANIZATIONS`   | False                                           | []              | Organizations to show in the contributors table. Will be evaluated in order, and a user only added to only the first one they are a part of. Any contributors with no organization will be shown in independent. Set to 'all' to show all organizations. 
 | `CONTRIB_FILENAME`   | False                                           | "contibutors"              | Filename to add contributors to. Will create both an 'md', and 'json' file with contents.
 
 **Performance Note:** Using start and end dates will reduce speed of the action by approximately 63X. ie without dates if the action takes 1.7 seconds, it will take 1 minute and 47 seconds.
@@ -121,13 +121,13 @@ jobs:
           echo "END_DATE=$end_date" >> "$GITHUB_ENV"
 
       - name: Run contributor action
-        uses: hcookie/organisational_contributors@v1
+        uses: hcookie/organizational_contributors@v1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           START_DATE: ${{ env.START_DATE }}
           END_DATE: ${{ env.END_DATE }}
           ORGANIZATION: <YOUR_ORGANIZATION_GOES_HERE>
-          SHOW_ORGANISATIONS: [ORGANISATIONS_TO_SHOW_HERE]
+          SHOW_ORGANIZATIONS: [ORGANIZATIONS_TO_SHOW_HERE]
           CONTRIB_FILENAME: "contributors"
 
       - name: Show Contributor
@@ -149,17 +149,17 @@ jobs:
 # Contributors
 
 - Date range for contributor list: 2021-01-01 to 2023-10-10
-- Organization: ORGANISATION_HERE
+- Organization: ORGANIZATION_HERE
 
 | Total Contributors | Total Contributions | % new contributors |
 | ------------------ | ------------------- | ------------------ |
 | 1                  | 143                 | 0%                 |
 
-## ORGANISATION_HERE
+## ORGANIZATION_HERE
 
 | Username  | All Time Contribution Count | New Contributor | Commits between 2021-01-01 and 2023-10-10                                                                                           |
 | --------- | --------------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| @hcookie | 143                         | False           | [organisation/repo]() |
+| @hcookie | 143                         | False           | [organization/repo]() |
 ```
 
 ## Local usage without Docker

@@ -45,8 +45,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # START_DATE: ${{ env.START_DATE }}
           # END_DATE: ${{ env.END_DATE }}
-          REPOSITORY: hcookie/organisational_contributors
-          SHOW_ORGANISATIONS: [ecmwf]
+          REPOSITORY: hcookie/organizational_contributors
+          SHOW_ORGANIZATIONS: [ecmwf]
           # SPONSOR_INFO: "true"
 
       - name: Show Contributor

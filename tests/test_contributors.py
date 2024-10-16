@@ -34,7 +34,7 @@ class TestContributors(unittest.TestCase):
             contribution_count = 100,
             commit_url ='https://github.com/owner/repo/commits?author=user&since=2022-01-01&until=2022-12-31', 
             sponsor_info='', 
-            organisations=[]
+            organizations=[]
         )
 
     @patch("contributors.get_contributors")
@@ -71,7 +71,7 @@ class TestContributors(unittest.TestCase):
                     contribution_count=200,
                     commit_url = "commit_url, commit_url",
                     sponsor_info = "sponsor_url_1",
-                    organisations= [],
+                    organizations= [],
                 ),
             ],
         )
@@ -142,7 +142,7 @@ class TestContributors(unittest.TestCase):
             contribution_count=100,
             commit_url="https://github.com/owner/repo/commits?author=user&since=2022-01-01&until=2022-12-31",
             sponsor_info='',
-            organisations=[],
+            organizations=[],
         )
 
 

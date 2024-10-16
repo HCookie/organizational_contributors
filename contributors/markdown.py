@@ -16,7 +16,7 @@ def write_to_markdown(
     repository,
     sponsor_info,
     link_to_profile,
-    show_organisations_list,
+    show_organizations_list,
 ):
     """
     This function writes a list of collaborators to a markdown file in table format.
@@ -32,7 +32,7 @@ def write_to_markdown(
         repository (str): The repository for which the contributors are being listed.
         sponsor_info (str): True if the user wants the sponsor_url shown in the report
         link_to_profile (str): True if the user wants the username linked to Github profile in the report
-        show_organisations_list (list): Organisations to show
+        show_organizations_list (list): Organizations to show
 
     Returns:
         None
@@ -47,7 +47,7 @@ def write_to_markdown(
         repository,
         sponsor_info,
         link_to_profile,
-        show_organisations_list,
+        show_organizations_list,
     )
 
     # Put together the summary table including # of new contributions, # of new contributors, % new contributors, % returning contributors
@@ -148,7 +148,7 @@ def get_contributor_table(
     repository,
     sponsor_info,
     link_to_profile,
-    show_organisations_list,
+    show_organizations_list,
 ):
     """
     This function returns a string containing a markdown table of the contributors and the total contribution count.
@@ -183,7 +183,7 @@ def get_contributor_table(
 
     total_contributions = 0
 
-    organisation_contributors = defaultdict(list)
+    organization_contributors = defaultdict(list)
 
     for collaborator in collaborators:
         total_contributions += collaborator.contribution_count
@@ -215,16 +215,16 @@ def get_contributor_table(
 
         added_to_org: bool = False
 
-        for org in collaborator.organisations or []:
-            if org in show_organisations_list or "all" in show_organisations_list:
-                organisation_contributors[org].append(row)
+        for org in collaborator.organizations or []:
+            if org in show_organizations_list or "all" in show_organizations_list:
+                organization_contributors[org].append(row)
                 added_to_org = True
                 break
 
         if not added_to_org:
-            organisation_contributors["Independent"].append(row)
+            organization_contributors["Independent"].append(row)
 
-    tables = {org: headers + "".join(rows) for org, rows in organisation_contributors.items()}
+    tables = {org: headers + "".join(rows) for org, rows in organization_contributors.items()}
 
     # table += row
     return tables, total_contributions
