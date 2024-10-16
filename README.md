@@ -127,7 +127,7 @@ jobs:
           START_DATE: ${{ env.START_DATE }}
           END_DATE: ${{ env.END_DATE }}
           ORGANIZATION: <YOUR_ORGANIZATION_GOES_HERE>
-          SHOW_ORGANIZATIONS: [ORGANIZATIONS_TO_SHOW_HERE]
+          SHOW_ORGANIZATIONS: ORGANIZATIONS_TO_SHOW_HERE,ANOTHER_ONE_HERE
           CONTRIB_FILENAME: "contributors"
 
       - name: Show Contributor
