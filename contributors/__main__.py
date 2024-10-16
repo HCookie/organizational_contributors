@@ -1,3 +1,3 @@
-from contributors.contributors import main
+from contributors import main
 
 main()
