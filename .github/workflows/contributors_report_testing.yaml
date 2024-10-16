@@ -45,8 +45,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # START_DATE: ${{ env.START_DATE }}
           # END_DATE: ${{ env.END_DATE }}
-          REPOSITORY: ecmwf/anemoi-training,ecmwf/anemoi-datasets
-          SHOW_ORGANISATIONS: ecmwf
+          REPOSITORY: hcookie/organisational_contributors
+          SHOW_ORGANISATIONS: [ecmwf]
           # SPONSOR_INFO: "true"
 
       - name: Show Contributor
