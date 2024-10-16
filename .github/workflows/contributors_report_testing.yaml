@@ -46,7 +46,7 @@ jobs:
           # START_DATE: ${{ env.START_DATE }}
           # END_DATE: ${{ env.END_DATE }}
           REPOSITORY: hcookie/organizational_contributors
-          SHOW_ORGANIZATIONS: [ecmwf]
+          SHOW_ORGANIZATIONS: ecmwf
           # SPONSOR_INFO: "true"
 
       - name: Show Contributor
