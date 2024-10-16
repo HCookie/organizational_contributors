@@ -13,6 +13,6 @@ lint:
 	# exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
 	flake8 . --config=.github/linters/.flake8 --count --exit-zero --max-complexity=15 --max-line-length=150
 	isort --settings-file=.github/linters/.isort.cfg .
-	pylint --rcfile=.github/linters/.python-lint --fail-under=9.0 *.py
-	mypy --config-file=.github/linters/.mypy.ini *.py
-	black .
+	pylint --rcfile=.github/linters/.python-lint --fail-under=9.0 contributors/*.py
+	mypy --config-file=.github/linters/.mypy.ini contributors/*.py
+	black . --line-length 120
