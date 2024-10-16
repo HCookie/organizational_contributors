@@ -121,13 +121,18 @@ jobs:
           echo "END_DATE=$end_date" >> "$GITHUB_ENV"
 
       - name: Run contributor action
-        uses: github/contributors@v1
+        uses: hcookie/organisational_contributors@v1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           START_DATE: ${{ env.START_DATE }}
           END_DATE: ${{ env.END_DATE }}
           ORGANIZATION: <YOUR_ORGANIZATION_GOES_HERE>
-          SPONSOR_INFO: "true"
+          SHOW_ORGANISATIONS: [ORGANISATIONS_TO_SHOW_HERE]
+          CONTRIB_FILENAME: "contributors"
+
+      - name: Show Contributor
+        shell: bash
+        run: cat contributors.md >> $GITHUB_STEP_SUMMARY
 
       - name: Create issue
         uses: peter-evans/create-issue-from-file@v5
@@ -144,31 +149,17 @@ jobs:
 # Contributors
 
 - Date range for contributor list: 2021-01-01 to 2023-10-10
-- Organization: super-linter
+- Organization: ORGANISATION_HERE
 
 | Total Contributors | Total Contributions | % new contributors |
 | ------------------ | ------------------- | ------------------ |
 | 1                  | 143                 | 0%                 |
 
+## ORGANISATION_HERE
+
 | Username  | All Time Contribution Count | New Contributor | Commits between 2021-01-01 and 2023-10-10                                                                                           |
 | --------- | --------------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| @zkoppert | 143                         | False           | [super-linter/super-linter](https://github.com/super-linter/super-linter/commits?author=zkoppert&since=2021-01-01&until=2023-10-10) |
-```
-
-## Example Markdown output with no dates supplied
-
-```markdown
-#### Contributors
-
-- Organization: super-linter
-
-| Total Contributors | Total Contributions | % new contributors |
-| ------------------ | ------------------- | ------------------ |
-| 1                  | 1913                | 0%                 |
-
-| Username  | All Time Contribution Count | New Contributor | Sponsor URL                                          | Commits between 2021-09-01 and 2023-09-30                                                                                           |
-| --------- | --------------------------- | --------------- | ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| @zkoppert | 1913                        | False           | [Sponsor Link](https://github.com/sponsors/zkoppert) | [super-linter/super-linter](https://github.com/super-linter/super-linter/commits?author=zkoppert&since=2021-09-01&until=2023-09-30) |
+| @hcookie | 143                         | False           | [organisation/repo]() |
 ```
 
 ## Local usage without Docker
@@ -178,12 +169,8 @@ jobs:
 1. Fill out the `.env` file with a _token_ from a user that has access to the organization to scan (listed below). Tokens should have at least read:org access for organization scanning and read:repository for repository scanning.
 1. Fill out the `.env` file with the configuration parameters you want to use
 1. `pip3 install -r requirements.txt`
-1. Run `python3 ./contributors.py`, which will output everything in the terminal
+1. Run `python3 -m contributors`, which will output everything in the terminal
 
 ## License
 
-[MIT](LICENSE)
-
-## More OSPO Tools
-
-Looking for more resources for your open source program office (OSPO)? Check out the [`github-ospo`](https://github.com/github/github-ospo) repo for a variety of tools designed to support your needs.
+[Apache 2](LICENSE)
