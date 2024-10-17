@@ -65,7 +65,7 @@ def main():
         environment.link_to_profile,
         environment.show_organizations_list,
     )
-    # TODO HCookie Fix to json
+
     json_writer.write_to_json(
         filename="{environment.filename}.json",
         start_date=environment.start_date,

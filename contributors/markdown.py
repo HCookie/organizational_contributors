@@ -191,7 +191,9 @@ def get_contributor_table(
         contribution_count = collaborator.contribution_count
         if repository:
             commit_urls = collaborator.commit_url
-        print(repository, type(repository))
+
+        if not isinstance(repository, list):
+            repository = [repository]
         if organization or len(repository) > 1:
             # split the urls from the comma separated list and make them into markdown links
             commit_url_list = collaborator.commit_url.split(",")
