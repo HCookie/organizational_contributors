@@ -13,12 +13,13 @@ LABEL com.github.actions.name="organizational_contributors" \
     org.opencontainers.image.description="GitHub Action that given an organization or repository, produces information about the contributors sorted by the organisation."
 
 WORKDIR /action/workspace
-COPY requirements.txt */*.py /action/workspace/
+COPY requirements.txt LICENSE pyproject.toml README.md /action/workspace/ 
+COPY contributors /action/workspace/contributors
 
-RUN python3 -m pip install --no-cache-dir -r requirements.txt \
+RUN python3 -m pip install --no-cache-dir ./ \
     && apt-get -y update \
     && apt-get -y install --no-install-recommends git=1:2.39.5-0+deb12u1 \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* 
 
-CMD ["/action/workspace/contributors"]
+CMD ["contributors"]
 ENTRYPOINT ["python3", "-m"]
