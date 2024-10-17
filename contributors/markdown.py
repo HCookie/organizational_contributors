@@ -2,7 +2,7 @@
 """This module contains the functions needed to write the output to markdown files."""
 
 
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 
 from .contributor_stats import ContributorStats
 
@@ -88,11 +88,7 @@ def write_markdown_file(filename, start_date, end_date, organization, repository
             markdown_file.write(table["Independent"])
         else:
             # Put independent last
-            orgs = list(table.keys())
-            if 'Independent' in orgs:
-                orgs.remove('Independent')
-                orgs.append('Independent')
-            for org in orgs:
+            for org in list(table.keys()):
                 org_title = f"## [{org}](https://github.com/{org})\n" if not org == "Independent" else f"## {org} \n"
                 markdown_file.write(org_title)
                 markdown_file.write(table[org])
@@ -222,12 +218,13 @@ def get_contributor_table(
             if org in show_organizations_list or "all" in show_organizations_list:
                 organization_contributors[org].append(row)
                 added_to_org = True
-                break
+                break     
 
         if not added_to_org:
             organization_contributors["Independent"].append(row)
 
-    tables = {org: headers + "".join(rows) for org, rows in organization_contributors.items()}
+    
+    tables = OrderedDict([(org, headers + "".join(organization_contributors[org])) for org in set((*show_organizations_list, 'Independent')).intersection(organization_contributors.keys())])
 
     # table += row
     return tables, total_contributions
