@@ -18,7 +18,8 @@ COPY requirements.txt */*.py /action/workspace/
 RUN python3 -m pip install --no-cache-dir -r requirements.txt \
     && apt-get -y update \
     && apt-get -y install --no-install-recommends git=1:2.39.5-0+deb12u1 \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && python3 -m pip install /action/workspace/contributors/
 
-CMD ["/action/workspace/contributors"]
+CMD ["contributors"]
 ENTRYPOINT ["python3", "-m"]
