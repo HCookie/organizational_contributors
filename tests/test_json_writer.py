@@ -32,6 +32,7 @@ class TestWriteToJson(unittest.TestCase):
                     "sponsor_info": "",
                 }
             ],
+            "show_organizations_list": [],
         }
 
     def test_write_to_json(self):
@@ -56,6 +57,7 @@ class TestWriteToJson(unittest.TestCase):
             repository_list=self.data["repository_list"],
             sponsor_info=self.data["sponsor_info"],
             link_to_profile=self.data["link_to_profile"],
+            show_organizations_list=[]
         )
         with open(self.filename, "r", encoding="utf-8") as f:
             result = json.load(f)
