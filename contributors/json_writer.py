@@ -12,7 +12,7 @@ def write_to_json(
     repository_list,
     sponsor_info,
     link_to_profile,
-    show_organizations_list
+    show_organizations_list,
 ):
     """Write data to a JSON file.
 

@@ -2,7 +2,7 @@
 """This module contains the functions needed to write the output to markdown files."""
 
 
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 
 from .contributor_stats import ContributorStats
 
@@ -87,12 +87,8 @@ def write_markdown_file(filename, start_date, end_date, organization, repository
         if len(table) == 1 and "Independent" in table:
             markdown_file.write(table["Independent"])
         else:
-            # Put independent last
-            orgs = list(table.keys())
-            if 'Independent' in orgs:
-                orgs.remove('Independent')
-                orgs.append('Independent')
-            for org in orgs:
+            # Put independent last
+            for org in list(table.keys()):
                 org_title = f"## [{org}](https://github.com/{org})\n" if not org == "Independent" else f"## {org} \n"
                 markdown_file.write(org_title)
                 markdown_file.write(table[org])
@@ -139,6 +135,7 @@ def get_summary_table(collaborators, start_date, end_date, total_contributions):
         summary_table += "| " + str(len(collaborators)) + " | " + str(total_contributions) + " |\n\n"
 
     return summary_table
+
 
 def get_contributor_table(
     collaborators: list[ContributorStats],
@@ -194,7 +191,6 @@ def get_contributor_table(
 
         if not isinstance(repository, list):
             repository = [repository]
-
         if organization or len(repository) > 1:
             # split the urls from the comma separated list and make them into markdown links
             commit_url_list = collaborator.commit_url.split(",")
@@ -227,8 +223,14 @@ def get_contributor_table(
 
         if not added_to_org:
             organization_contributors["Independent"].append(row)
-
-    tables = {org: headers + "".join(rows) for org, rows in organization_contributors.items()}
+    
+    ordered_orgs = [org for org in (*show_organizations_list, "Independent") if org in organization_contributors]
+    tables = OrderedDict(
+        [
+            (org, headers + "".join(organization_contributors[org]))
+            for org in ordered_orgs
+        ]
+    )
 
     # table += row
     return tables, total_contributions
