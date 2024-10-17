@@ -54,6 +54,12 @@ jobs:
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@c47758b77c9736f4b2ef4073d4d51994fabfe349
+      - name: Format repo slug
+        uses: actions/github-script@v4
+        id: repo_slug
+        with:
+          result-encoding: string
+          script: return 'ghcr.io/${{ github.repository }}'.toLowerCase()
       - name: Log in to the Container registry
         uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567
         with:
@@ -69,24 +75,24 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.create_release.outputs.full-tag }}
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.create_release.outputs.short-tag }}
+            ${{ env.REGISTRY }}/${{ steps.repo_slug.outputs.result }}:latest
+            ${{ env.REGISTRY }}/${{ steps.repo_slug.outputs.result }}:${{ needs.create_release.outputs.full-tag }}
+            ${{ env.REGISTRY }}/${{ steps.repo_slug.outputs.result }}:${{ needs.create_release.outputs.short-tag }}
           platforms: linux/amd64
           provenance: false
           sbom: false
-  create_discussion:
-    needs: create_release
-    runs-on: ubuntu-latest
-    permissions:
-      discussions: write
-    steps:
-      - name: Create an announcement discussion for release
-        uses: abirismyname/create-discussion@6e6ef67e5eeb042343ef8b3d8d0f5d545cbdf024
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          title: ${{ needs.create_release.outputs.full-tag }}
-          body: ${{ needs.create_release.outputs.body }}
-          repository-id: ${{ secrets.RELEASE_DISCUSSION_REPOSITORY_ID }}
-          category-id: ${{ secrets.RELEASE_DISCUSSION_CATEGORY_ID }}
+  # create_discussion:
+  #   needs: create_release
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     discussions: write
+  #   steps:
+  #     - name: Create an announcement discussion for release
+  #       uses: abirismyname/create-discussion@6e6ef67e5eeb042343ef8b3d8d0f5d545cbdf024
+  #       env:
+  #         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         title: ${{ needs.create_release.outputs.full-tag }}
+  #         body: ${{ needs.create_release.outputs.body }}
+  #         repository-id: ${{ secrets.RELEASE_DISCUSSION_REPOSITORY_ID }}
+  #         category-id: ${{ secrets.RELEASE_DISCUSSION_CATEGORY_ID }}
