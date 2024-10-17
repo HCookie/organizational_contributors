@@ -87,7 +87,7 @@ def write_markdown_file(filename, start_date, end_date, organization, repository
         if len(table) == 1 and "Independent" in table:
             markdown_file.write(table["Independent"])
         else:
-            # Put independent last
+            # Put independent last
             for org in list(table.keys()):
                 org_title = f"## [{org}](https://github.com/{org})\n" if not org == "Independent" else f"## {org} \n"
                 markdown_file.write(org_title)
@@ -135,6 +135,7 @@ def get_summary_table(collaborators, start_date, end_date, total_contributions):
         summary_table += "| " + str(len(collaborators)) + " | " + str(total_contributions) + " |\n\n"
 
     return summary_table
+
 
 def get_contributor_table(
     collaborators: list[ContributorStats],
@@ -218,13 +219,18 @@ def get_contributor_table(
             if org in show_organizations_list or "all" in show_organizations_list:
                 organization_contributors[org].append(row)
                 added_to_org = True
-                break     
+                break
 
         if not added_to_org:
             organization_contributors["Independent"].append(row)
 
-    
-    tables = OrderedDict([(org, headers + "".join(organization_contributors[org])) for org in set((*show_organizations_list, 'Independent')).intersection(organization_contributors.keys())])
+    tables = OrderedDict(
+        [
+            (org, headers + "".join(organization_contributors[org]))
+            for org in set((*show_organizations_list, "Independent")).intersection(organization_contributors.keys())
+        ]
+    )
+    print(tables)
 
     # table += row
     return tables, total_contributions
