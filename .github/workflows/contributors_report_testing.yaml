@@ -1,12 +1,12 @@
 ---
-name: Monthly contributor report
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: "3 2 1 * *"
+name: Testing contributor report
 # on:
-#   push:
-#     branches: [testing]
+#   workflow_dispatch:
+#   schedule:
+#     - cron: "3 2 1 * *"
+on:
+  push:
+    branches: [testing]
 permissions:
   contents: read
 
@@ -18,6 +18,8 @@ jobs:
       issues: write
 
     steps:
+      - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
+        
       - name: Get dates for last month
         shell: bash
         run: |
@@ -28,17 +30,34 @@ jobs:
           end_date=$(date -d "$start_date +1 month -1 day" +%Y-%m-%d)
 
           #Set an environment variable with the date range
-          echo "START_DATE=$start_date" >> "$GITHUB_ENV"
-          echo "END_DATE=$end_date" >> "$GITHUB_ENV"
+          # echo "START_DATE=$start_date" >> "$GITHUB_ENV"
+          # echo "END_DATE=$end_date" >> "$GITHUB_ENV"
 
-      - name: Run contributor action
-        uses: hcookie/organizational_contributors@1286dc8d6904a9a7f735e28b7503be164fb7d4b9
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          
+      - name: Run Contributors
+        run: python -m contributors
+
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          START_DATE: ${{ env.START_DATE }}
-          END_DATE: ${{ env.END_DATE }}
+          # START_DATE: ${{ env.START_DATE }}
+          # END_DATE: ${{ env.END_DATE }}
           REPOSITORY: hcookie/organizational_contributors
+          SHOW_ORGANIZATIONS: ecmwf
           # SPONSOR_INFO: "true"
+
+      - name: Run Contributors with multiple repos
+        run: python -m contributors
+        env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            # START_DATE: ${{ env.START_DATE }}
+            # END_DATE: ${{ env.END_DATE }}
+            REPOSITORY: hcookie/organizational_contributors,ecmwf/anemoi-training
+            SHOW_ORGANIZATIONS: ecmwf, ecmwf-lab
+            # SPONSOR_INFO: "true"
 
       - name: Show Contributor
         shell: bash

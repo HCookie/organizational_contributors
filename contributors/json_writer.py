@@ -12,6 +12,7 @@ def write_to_json(
     repository_list,
     sponsor_info,
     link_to_profile,
+    show_organizations_list,
 ):
     """Write data to a JSON file.
 
@@ -24,6 +25,7 @@ def write_to_json(
         repository_list (list): A list of repositories for which the contributors are being listed.
         sponsor_info (str): A string indicating whether sponsor information should be included.
         link_to_profile (str): A string indicating whether a link to the contributor's profile should be included.
+        show_organizations_list (list): Organisations to show
 
     Returns:
         None
@@ -70,6 +72,7 @@ def write_to_json(
         "repository_list": repository_list,
         "sponsor_info": sponsor_info,
         "link_to_profile": link_to_profile,
+        "show_organizations_list": show_organizations_list,
         "contributors": [contributor.__dict__ for contributor in contributors],
     }
 

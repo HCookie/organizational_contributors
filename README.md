@@ -1,24 +1,26 @@
-# Contributors sorted by Organisation action
+# Contributors sorted by Organization action
 
 [![Python package](https://github.com/hcookie/contributors/actions/workflows/python-ci.yml/badge.svg)](https://github.com/hcookie/contributors/actions/workflows/python-ci.yml)
 [![Docker Image CI](https://github.com/hcookie/contributors/actions/workflows/docker-ci.yml/badge.svg)](https://github.com/hcookie/contributors/actions/workflows/docker-ci.yml)
 [![CodeQL](https://github.com/hcookie/contributors/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/hcookie/contributors/actions/workflows/github-code-scanning/codeql)[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/github/contributors/badge)](https://scorecard.dev/viewer/?uri=github.com/github/contributors)
 
-This is a GitHub Action that given an organization or specified repositories, produces information about the [contributors](https://chaoss.community/kb/metric-contributors/) sorted by organisation.
+This is a GitHub Action that given an organization or specified repositories, produces information about the [contributors](https://chaoss.community/kb/metric-contributors/) sorted by organization.
 
 Similar actions to help you recognize contributors by putting them into a `README` or `CONTRIBUTORS.md` include:
 
 - [contributor-list](https://github.com/marketplace/actions/contribute-list)
 - [contributors](https://github.com/github/contributors)
 
+If no organisations to show are given, this action is effectively the same as [contributors](https://github.com/github/contributors).
+
 ## Example use cases
 
-- As a maintainer, you may want to acknowledge contributors from various organisations in a discussion post
-
+- As a maintainer, you may want to acknowledge contributors from various organizations in a discussion post
+- A repository wants to track contributions from organizations
 
 ## Support
 
-If you need support using this project or have questions about it, please [open up an issue in this repository](https://github.com/github/contributors/issues). 
+If you need support using this project or have questions about it, please [open up an issue in this repository](https://github.com/hcookie/organizational_contributors/issues).
 
 ## What is a contributor?
 
@@ -80,8 +82,8 @@ This action can be configured to authenticate with GitHub App Installation or Pe
 | `END_DATE`          | False                                           | Current Date      | The date at which you want to stop gathering contributor information. Must be later than the `START_DATE`. ie. Aug 2nd, 2023 would be `2023-08-02`                                                                       |
 | `SPONSOR_INFO`      | False                                           | False             | If you want to include sponsor information in the output. This will include the sponsor count and the sponsor URL. This will impact action performance. ie. SPONSOR_INFO = "False" or SPONSOR_INFO = "True"              |
 | `LINK_TO_PROFILE`   | False                                           | True              | If you want to link usernames to their GitHub profiles in the output. ie. LINK_TO_PROFILE = "True" or LINK_TO_PROFILE = "False"                                                                                          |
-
-**Note**: If `start_date` and `end_date` are specified then the action will determine if the contributor is new. A new contributor is one that has contributed in the date range specified but not before the start date.
+| `SHOW_ORGANIZATIONS`   | False                                           | []              | Organizations to show in the contributors table. Will be evaluated in order, and a user only added to only the first one they are a part of. Any contributors with no organization will be shown in independent. Set to 'all' to show all organizations. 
+| `CONTRIB_FILENAME`   | False                                           | "contibutors"              | Filename to add contributors to. Will create both an 'md', and 'json' file with contents.
 
 **Performance Note:** Using start and end dates will reduce speed of the action by approximately 63X. ie without dates if the action takes 1.7 seconds, it will take 1 minute and 47 seconds.
 
@@ -121,13 +123,18 @@ jobs:
           echo "END_DATE=$end_date" >> "$GITHUB_ENV"
 
       - name: Run contributor action
-        uses: github/contributors@v1
+        uses: hcookie/organizational_contributors@v1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           START_DATE: ${{ env.START_DATE }}
           END_DATE: ${{ env.END_DATE }}
           ORGANIZATION: <YOUR_ORGANIZATION_GOES_HERE>
-          SPONSOR_INFO: "true"
+          SHOW_ORGANIZATIONS: ORGANIZATIONS_TO_SHOW_HERE,ANOTHER_ONE_HERE
+          CONTRIB_FILENAME: "contributors"
+
+      - name: Show Contributor
+        shell: bash
+        run: cat contributors.md >> $GITHUB_STEP_SUMMARY
 
       - name: Create issue
         uses: peter-evans/create-issue-from-file@v5
@@ -144,31 +151,17 @@ jobs:
 # Contributors
 
 - Date range for contributor list: 2021-01-01 to 2023-10-10
-- Organization: super-linter
+- Organization: ORGANIZATION_HERE
 
 | Total Contributors | Total Contributions | % new contributors |
 | ------------------ | ------------------- | ------------------ |
 | 1                  | 143                 | 0%                 |
 
+## ORGANIZATION_HERE
+
 | Username  | All Time Contribution Count | New Contributor | Commits between 2021-01-01 and 2023-10-10                                                                                           |
 | --------- | --------------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| @zkoppert | 143                         | False           | [super-linter/super-linter](https://github.com/super-linter/super-linter/commits?author=zkoppert&since=2021-01-01&until=2023-10-10) |
-```
-
-## Example Markdown output with no dates supplied
-
-```markdown
-#### Contributors
-
-- Organization: super-linter
-
-| Total Contributors | Total Contributions | % new contributors |
-| ------------------ | ------------------- | ------------------ |
-| 1                  | 1913                | 0%                 |
-
-| Username  | All Time Contribution Count | New Contributor | Sponsor URL                                          | Commits between 2021-09-01 and 2023-09-30                                                                                           |
-| --------- | --------------------------- | --------------- | ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| @zkoppert | 1913                        | False           | [Sponsor Link](https://github.com/sponsors/zkoppert) | [super-linter/super-linter](https://github.com/super-linter/super-linter/commits?author=zkoppert&since=2021-09-01&until=2023-09-30) |
+| @hcookie | 143                         | False           | [organization/repo]() |
 ```
 
 ## Local usage without Docker
@@ -178,12 +171,8 @@ jobs:
 1. Fill out the `.env` file with a _token_ from a user that has access to the organization to scan (listed below). Tokens should have at least read:org access for organization scanning and read:repository for repository scanning.
 1. Fill out the `.env` file with the configuration parameters you want to use
 1. `pip3 install -r requirements.txt`
-1. Run `python3 ./contributors.py`, which will output everything in the terminal
+1. Run `python3 -m contributors`, which will output everything in the terminal
 
 ## License
 
-[MIT](LICENSE)
-
-## More OSPO Tools
-
-Looking for more resources for your open source program office (OSPO)? Check out the [`github-ospo`](https://github.com/github/github-ospo) repo for a variety of tools designed to support your needs.
+[Apache 2](LICENSE)
