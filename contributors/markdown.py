@@ -223,14 +223,14 @@ def get_contributor_table(
 
         if not added_to_org:
             organization_contributors["Independent"].append(row)
-
+    
+    ordered_orgs = [org for org in (*show_organizations_list, "Independent") if org in organization_contributors]
     tables = OrderedDict(
         [
             (org, headers + "".join(organization_contributors[org]))
-            for org in set((*show_organizations_list, "Independent")).intersection(organization_contributors.keys())
+            for org in ordered_orgs
         ]
     )
-    print(tables)
 
     # table += row
     return tables, total_contributions
