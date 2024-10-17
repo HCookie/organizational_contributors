@@ -81,18 +81,18 @@ jobs:
           platforms: linux/amd64
           provenance: false
           sbom: false
-  create_discussion:
-    needs: create_release
-    runs-on: ubuntu-latest
-    permissions:
-      discussions: write
-    steps:
-      - name: Create an announcement discussion for release
-        uses: abirismyname/create-discussion@6e6ef67e5eeb042343ef8b3d8d0f5d545cbdf024
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          title: ${{ needs.create_release.outputs.full-tag }}
-          body: ${{ needs.create_release.outputs.body }}
-          repository-id: ${{ secrets.RELEASE_DISCUSSION_REPOSITORY_ID }}
-          category-id: ${{ secrets.RELEASE_DISCUSSION_CATEGORY_ID }}
+  # create_discussion:
+  #   needs: create_release
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     discussions: write
+  #   steps:
+  #     - name: Create an announcement discussion for release
+  #       uses: abirismyname/create-discussion@6e6ef67e5eeb042343ef8b3d8d0f5d545cbdf024
+  #       env:
+  #         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         title: ${{ needs.create_release.outputs.full-tag }}
+  #         body: ${{ needs.create_release.outputs.body }}
+  #         repository-id: ${{ secrets.RELEASE_DISCUSSION_REPOSITORY_ID }}
+  #         category-id: ${{ secrets.RELEASE_DISCUSSION_CATEGORY_ID }}
