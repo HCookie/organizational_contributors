@@ -11,6 +11,8 @@ Similar actions to help you recognize contributors by putting them into a `READM
 - [contributor-list](https://github.com/marketplace/actions/contribute-list)
 - [contributors](https://github.com/github/contributors)
 
+If no organisations to show are given, this action is effectively the same as [contributors](https://github.com/github/contributors).
+
 ## Example use cases
 
 - As a maintainer, you may want to acknowledge contributors from various organizations in a discussion post
@@ -18,7 +20,7 @@ Similar actions to help you recognize contributors by putting them into a `READM
 
 ## Support
 
-If you need support using this project or have questions about it, please [open up an issue in this repository](https://github.com/github/contributors/issues). 
+If you need support using this project or have questions about it, please [open up an issue in this repository](https://github.com/hcookie/organizational_contributors/issues).
 
 ## What is a contributor?
 

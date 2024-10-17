@@ -49,6 +49,16 @@ jobs:
           SHOW_ORGANIZATIONS: ecmwf
           # SPONSOR_INFO: "true"
 
+      - name: Run Contributors with multiple repos
+        run: python -m contributors
+        env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            # START_DATE: ${{ env.START_DATE }}
+            # END_DATE: ${{ env.END_DATE }}
+            REPOSITORY: hcookie/organizational_contributors,ecmwf/anemoi-training
+            SHOW_ORGANIZATIONS: ecmwf
+            # SPONSOR_INFO: "true"
+
       - name: Show Contributor
         shell: bash
         run: cat contributors.md >> $GITHUB_STEP_SUMMARY
