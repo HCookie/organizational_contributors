@@ -75,6 +75,7 @@ def main():
         sponsor_info=environment.sponsor_info,
         link_to_profile=environment.link_to_profile,
         contributors=contributors,
+        show_organizations_list=environment.show_organizations_list,
     )
 
 
