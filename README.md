@@ -1,9 +1,8 @@
 # Contributors sorted by Organization action
 
-[![Python package](https://github.com/hcookie/contributors/actions/workflows/python-ci.yml/badge.svg)](https://github.com/hcookie/contributors/actions/workflows/python-ci.yml)
-[![Docker Image CI](https://github.com/hcookie/contributors/actions/workflows/docker-ci.yml/badge.svg)](https://github.com/hcookie/contributors/actions/workflows/docker-ci.yml)
-[![CodeQL](https://github.com/hcookie/contributors/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/hcookie/contributors/actions/workflows/github-code-scanning/codeql)[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/github/contributors/badge)](https://scorecard.dev/viewer/?uri=github.com/github/contributors)
-
+[![Python package](https://github.com/hcookie/organizational_contributors/actions/workflows/python-ci.yml/badge.svg)](https://github.com/hcookie/organizational_contributors/actions/workflows/python-ci.yml)
+[![Docker Image CI](https://github.com/hcookie/organizational_contributors/actions/workflows/docker-ci.yml/badge.svg)](https://github.com/hcookie/organizational_contributors/actions/workflows/docker-ci.yml)
+[![CodeQL](https://github.com/hcookie/organizational_contributors/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/hcookie/organizational_contributors/actions/workflows/github-code-scanning/codeql)[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/hcookie/organizational_contributors/badge)](https://scorecard.dev/viewer/?uri=github.com/hcookie/organizational_contributors)
 This is a GitHub Action that given an organization or specified repositories, produces information about the [contributors](https://chaoss.community/kb/metric-contributors/) sorted by organization.
 
 Similar actions to help you recognize contributors by putting them into a `README` or `CONTRIBUTORS.md` include:
