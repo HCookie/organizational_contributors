@@ -13,7 +13,7 @@ LABEL com.github.actions.name="organizational_contributors" \
     org.opencontainers.image.description="GitHub Action that given an organization or repository, produces information about the contributors sorted by the organisation."
 
 WORKDIR /action/workspace
-COPY requirements.txt *.py /action/workspace/
+COPY requirements.txt */*.py /action/workspace/
 
 RUN python3 -m pip install --no-cache-dir -r requirements.txt \
     && apt-get -y update \
